@@ -1,5 +1,5 @@
 
-public class HelloWorld {
+public class MenuManager {
 	public static void main(String[] args) {
 		System.out.println("| Music PlayList |\n");
 		System.out.println("** Select a menu **");
