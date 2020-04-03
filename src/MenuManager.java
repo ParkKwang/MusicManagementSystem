@@ -36,5 +36,7 @@ public class MenuManager { //idea note: 재생횟수 체크, 선호하는 노래 보여주는거
 			}
 			
 		}
+		System.out.println("Thank you for using!");
+		
 	}
 }

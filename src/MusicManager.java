@@ -45,12 +45,12 @@ public class MusicManager {
 			int x = 5;
 			x = music.comfirmDecision("delete", 3);
 			if (x == 1) {
-				System.out.println("The music has been deleted!");
+				System.out.println("The music has been deleted!\n");
 				music = null;
 			}
 			else if (x == 2) {
 				System.out.println("Execution canceled..");
-				System.out.println("Exit delete menu..");
+				System.out.println("Exit delete menu..\n");
 				return;
 			}
 		}
@@ -116,7 +116,11 @@ public class MusicManager {
 		String buf = input.nextLine();
 		System.out.print("Enter a title of the music: ");
 		String title = input.nextLine();
-		if (music.title.equals(title)) {
+		if (music == null) {
+			System.out.println("There's no music with the title.\n");
+			return;
+		}
+		else if (music.title.equals(title)) {
 			music.printInfo();
 			System.out.println();
 		}
