@@ -13,7 +13,7 @@ public class MenuManager { //idea note: 재생횟수 체크, 선호하는 노래 보여주는거
 			System.out.println("  1. Add Music");
 			System.out.println("  2. Delete Music");
 			System.out.println("  3. Edit Music");
-			System.out.println("  4. View Music Info"); //전체 리스트, 장르별?
+			System.out.println("  4. View Music Lists"); //장르별?
 			System.out.println("  5. Exit");
 			System.out.print("-Select a menu: ");
 			
@@ -32,7 +32,7 @@ public class MenuManager { //idea note: 재생횟수 체크, 선호하는 노래 보여주는거
 			}
 			else if (select == 4) {
 				System.out.println();
-				mm.viewmusicinfo();
+				mm.viewmusiclist();
 			}
 			
 		}
