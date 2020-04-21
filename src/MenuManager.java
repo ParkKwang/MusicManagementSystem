@@ -1,13 +1,13 @@
 import java.util.Scanner;
 
-public class MenuManager { //idea note: ¼±È£ÇÏ´Â ³ë·¡ º¸¿©ÁÖ´Â°Å -> Áñ°ÜÃ£±â
+public class MenuManager { //idea note: ì„ í˜¸í•˜ëŠ” ë…¸ë˜ ë³´ì—¬ì£¼ëŠ”ê±° -> ì¦ê²¨ì°¾ê¸°
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		MusicManager mm = new MusicManager(input);
 		
 		int select = 0;
 		
-		while (select != 5) { //°¡»ç ÀÔ·Â ¹è³Ê, Àç»ı¸ñ·Ï(Àå¸£º°)
+		while (select != 5) { //ê°€ì‚¬ ì…ë ¥ ë°°ë„ˆ, ì¬ìƒëª©ë¡(ì¥ë¥´ë³„)
 			System.out.print("| Music PlayList |\n");
 			System.out.println("** Manage Tool **");
 			System.out.println("  1. Add Music");

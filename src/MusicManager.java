@@ -2,10 +2,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import music.Ballad;
+import music.Dance;
 import music.Music;
+import music.MusicCategory;
+import music.Rock;
 
 public class MusicManager {
-	ArrayList<Music> musics = new ArrayList<Music>(); //MusicÀÌ¶ó´Â class¸¦ ´Ù·ç´Â ¹è¿­ musics
+	ArrayList<Music> musics = new ArrayList<Music>(); //Musicì´ë¼ëŠ” classë¥¼ ë‹¤ë£¨ëŠ” ë°°ì—´ musics
 	Scanner input;
 	
 	public MusicManager(Scanner input) {
@@ -20,40 +23,54 @@ public class MusicManager {
 			System.out.println("*Add Music*");
 			System.out.println("1. POP");
 			System.out.println("2. Ballad");
+			System.out.println("3. Dance");
+			System.out.println("4. Rock");
 			System.out.print("Select Category: ");
 			num = input.nextInt();
 			if (num == 1) {
-				music = new Music();
+				music = new Music(MusicCategory.POP);
 				music.getUserInput(input);
 				musics.add(music);
 				break;
 			}
 			else if (num == 2) {
-				music = new Ballad();
+				music = new Ballad(MusicCategory.Ballad);
+				music.getUserInput(input);
+				musics.add(music);
+				break;
+			}
+			else if (num == 3) {
+				music = new Dance(MusicCategory.Dance);
+				music.getUserInput(input);
+				musics.add(music);
+				break;
+			}
+			else if (num == 4) {
+				music = new Rock(MusicCategory.Rock);
 				music.getUserInput(input);
 				musics.add(music);
 				break;
 			}
 			else {
-				System.out.println("Select a number between 1 or 2");
+				System.out.println("Select a number between 1 and 4");
 			}
 		}
 	}
 	
 	public void deletemusic() {
-		String buf = input.nextLine();	//¾î¶² À½¾Ç »èÁ¦ÇÒ °ÍÀÎ°¡
+		String buf = input.nextLine();	//ì–´ë–¤ ìŒì•… ì‚­ì œí•  ê²ƒì¸ê°€
 		System.out.print("Enter a title of the music to delete: ");
 		String musictitle = input.nextLine();
 		
-		int index = -1; //-1 Àº index°¡ NULLÀÌ¶ó´Â ¶æ
-		for (int i = 0; i < musics.size(); i++) {	//±×·± À½¾ÇÀÌ ÀÖ´Â°¡ È®ÀÎÇÏ±â
+		int index = -1; //-1 ì€ indexê°€ NULLì´ë¼ëŠ” ëœ»
+		for (int i = 0; i < musics.size(); i++) {	//ê·¸ëŸ° ìŒì•…ì´ ìˆëŠ”ê°€ í™•ì¸í•˜ê¸°
 			if (musics.get(i).getTitle().equals(musictitle)) {
 				index = i;
 				break;
 			}
 		}
 		
-		if (index >= 0) {	//À½¾Ç »èÁ¦
+		if (index >= 0) {	//ìŒì•… ì‚­ì œ
 			Music music = new Music(input);
 			
 			int x = 5;
@@ -68,7 +85,7 @@ public class MusicManager {
 				return;
 			}
 		}
-		else {	//±×·± À½¾Ç ¾øÀ½
+		else {	//ê·¸ëŸ° ìŒì•… ì—†ìŒ
 			System.out.println("There's no music with the title.");
 			System.out.println("Exit delete menu..\n");
 			return;
@@ -85,7 +102,7 @@ public class MusicManager {
 			if (music.getTitle().equals(musictitle)) {
 				int select = 0;
 				
-				while (select != 5) { //°¡»ç ÀÔ·Â ¹è³Ê, Àç»ı¸ñ·Ï
+				while (select != 5) { //ê°€ì‚¬ ì…ë ¥ ë°°ë„ˆ, ì¬ìƒëª©ë¡
 					System.out.println("** Edit Tool **");
 					System.out.println("  1. Edit Title");
 					System.out.println("  2. Edit Singer");
@@ -134,13 +151,12 @@ public class MusicManager {
 	
 	public void viewmusiclist() {
 		int number = 0;
-		while (number != 1 && number != 2 && number != 3 && number != 4 && number != 5 && number != 6) {
+		while (number != 1 && number != 2 && number != 3 && number != 4 && number != 5) {
 			System.out.println("1: View All Musics");
 			System.out.println("2: View POP Musics");
-			System.out.println("3: View Balad(±¹³») Musics");
-			System.out.println("4: View Balad(±¹¿Ü) Musics");
-			System.out.println("5: View Dance Musics");
-			System.out.println("6: View Rock Musics");
+			System.out.println("3: View Ballad Musics");
+			System.out.println("4: View Dance Musics");
+			System.out.println("5: View Rock Musics");
 			System.out.print("-Select a number: ");
 			number = input.nextInt(); 
 			if (number == 1) {
@@ -156,18 +172,20 @@ public class MusicManager {
 				}
 			}
 			else if (number == 2) {
+				System.out.println();
 				for (int i = 0; i < musics.size(); i++) {
-					if (musics.get(i).getGenre().equals("POP")) {
+					if (musics.get(i).getCategory() == MusicCategory.POP) {
 						musics.get(i).printInfo();
 					}
-					else { //POP musicÀÌ ¾øÀ½ Ãâ·Â -> ÇÏ³ªµµ ¾øÀ½À» °Ë»çÇÏ´Â ¹æ¹ı
+					else { //POP musicì´ ì—†ìŒ ì¶œë ¥ -> í•˜ë‚˜ë„ ì—†ìŒì„ ê²€ì‚¬í•˜ëŠ” ë°©ë²•
 					}
 				}
 				System.out.println();
 			}
 			else if (number == 3) {
+				System.out.println();
 				for (int i = 0; i < musics.size(); i++) {
-					if (musics.get(i).getGenre().equals("Balad(±¹³»)")) {
+					if (musics.get(i).getCategory() == MusicCategory.Ballad) {
 						musics.get(i).printInfo();
 					}
 					else {
@@ -176,8 +194,9 @@ public class MusicManager {
 				System.out.println();
 			}
 			else if (number == 4) {
+				System.out.println();
 				for (int i = 0; i < musics.size(); i++) {
-					if (musics.get(i).getGenre().equals("Balad(±¹¿Ü)")) {
+					if (musics.get(i).getCategory() == MusicCategory.Dance) {
 						musics.get(i).printInfo();
 					}
 					else {
@@ -186,18 +205,9 @@ public class MusicManager {
 				System.out.println();
 			}
 			else if (number == 5) {
-				for (int i = 0; i < musics.size(); i++) {
-					if (musics.get(i).getGenre().equals("Dance")) {
-						musics.get(i).printInfo();
-					}
-					else {
-					}
-				}
 				System.out.println();
-			}
-			else if (number == 6) {
 				for (int i = 0; i < musics.size(); i++) {
-					if (musics.get(i).getGenre().equals("Rock")) {
+					if (musics.get(i).getCategory() == MusicCategory.Rock) {
 						musics.get(i).printInfo();
 					}
 					else {
@@ -206,7 +216,7 @@ public class MusicManager {
 				System.out.println();
 			}
 			else {
-				System.out.println("Select a number between 1 and 6");
+				System.out.println("Select a number between 1 and 5");
 			}
 		}
 	}

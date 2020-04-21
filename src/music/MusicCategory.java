@@ -2,7 +2,7 @@ package music;
 
 public enum MusicCategory {
 	POP,
-	Balad,
+	Ballad,
 	Dance,
 	Rock
 }
