@@ -10,28 +10,28 @@ public class MenuManager { //idea note: 선호하는 노래 보여주는거 -> �
 		while (select != 5) { //가사 입력 배너, 재생목록(장르별)
 			showMenu();
 			select = input.nextInt();
-			switch(select) {
-			case 1:
+			if (select == 1) {
 				System.out.println();
 				mm.addmusic();
-				break;
-			case 2:
+			}
+			else if (select == 2) {
 				System.out.println();
 				mm.deletemusic();
-				break;
-			case 3:
+			}
+			else if (select == 3) {
 				System.out.println();
 				mm.editmusic();
-				break;
-			case 4:
+			}
+			else if (select == 4) {
 				System.out.println();
 				mm.viewmusiclist();
-				break;
-			default:
-					continue;
 			}
-		System.out.println("Thank you for using!");
+			else {
+				System.out.println("Select number between 1 and 5");
+			}
 		}
+		
+		System.out.println("Thank you for using!");
 	}
 	
 	public static void showMenu() {

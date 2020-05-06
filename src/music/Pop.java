@@ -14,6 +14,7 @@ public class Pop extends Music{
 	}
 	
 	public void getUserInput(Scanner input) {
+		String buf = input.nextLine();
 		setTitle(input);
 		setSinger(input);
 		setComposer(input);

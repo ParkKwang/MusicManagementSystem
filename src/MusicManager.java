@@ -133,12 +133,15 @@ public class MusicManager {
 					select = input.nextInt();
 					switch (select) {
 					case 1:
+						String buf = input.nextLine();
 						musicInput.setTitle(input);
 						break;
 					case 2:
+						String buf2 = input.nextLine();
 						musicInput.setSinger(input);
 						break;
 					case 3:
+						String buf3 = input.nextLine();
 						musicInput.setComposer(input);
 						break;
 					case 4:

@@ -8,7 +8,7 @@ public class Ballad extends SpecificMusic{
 	}
 	
 	public void getUserInput(Scanner input) {
-		setNationedTitle(input);		
+		setNationedTitle(input);
 		setSinger(input);
 		setComposer(input);
 		setDates(input);

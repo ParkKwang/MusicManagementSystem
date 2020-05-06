@@ -23,7 +23,7 @@ public abstract class SpecificMusic extends Music {
 		String buf = input.nextLine();
 		String answer = "hello";
 		while (answer != "domestic" && answer != "Domestic" && answer != "Foreign" && answer != "foreign") {
-			System.out.print("Is this a domestic ballad or a foreign ballad? ");		
+			System.out.print("Is this a domestic ballad or a foreign ballad? ");
 			answer = input.nextLine();
 			if (answer.equals("Domestic") || answer.equals("domestic")) {
 				this.nation = answer;

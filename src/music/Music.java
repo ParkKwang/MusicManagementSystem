@@ -114,21 +114,18 @@ public abstract class Music implements MusicInput{
 	public abstract void printInfo();
 	
 	public void setTitle(Scanner input) {
-		String buf = input.nextLine();
 		System.out.print("Enter the title of the music: ");
 		String title = input.nextLine();
 		this.setTitle(title);
 	}
 	
 	public void setSinger(Scanner input) {
-		String buf = input.nextLine();
 		System.out.print("Name of the singer: ");
 		String singer = input.nextLine();
 		this.setSinger(singer);
 	}
 	
 	public void setComposer(Scanner input) {
-		String buf = input.nextLine();
 		System.out.print("Composer: ");
 		String composer = input.nextLine();
 		this.setComposer(composer);
