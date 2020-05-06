@@ -5,10 +5,12 @@ import music.Ballad;
 import music.Dance;
 import music.Music;
 import music.MusicCategory;
+import music.MusicInput;
+import music.Pop;
 import music.Rock;
 
 public class MusicManager {
-	ArrayList<Music> musics = new ArrayList<Music>(); //Music이라는 class를 다루는 배열 musics
+	ArrayList<MusicInput> musics = new ArrayList<MusicInput>(); //Music이라는 class를 다루는 배열 musics
 	Scanner input;
 	
 	public MusicManager(Scanner input) {
@@ -16,53 +18,74 @@ public class MusicManager {
 	}
 	
 	public void addmusic() {
-		Music music;
+		MusicInput musicInput = null;
 		
 		int num = 0;
-		while (num != 1 && num != 2) {
-			System.out.println("*Add Music*");
-			System.out.println("1. POP");
-			System.out.println("2. Ballad");
-			System.out.println("3. Dance");
-			System.out.println("4. Rock");
-			System.out.print("Select Category: ");
+		while (num != 1 && num != 2 && num != 3 && num != 4) {
+			showAddMenu();
 			num = input.nextInt();
-			if (num == 1) {
-				music = new Music(MusicCategory.POP);
-				music.getUserInput(input);
-				musics.add(music);
+			switch (num) {
+			case 1:
+				addPOP(musicInput, input);
 				break;
-			}
-			else if (num == 2) {
-				music = new Ballad(MusicCategory.Ballad);
-				music.getUserInput(input);
-				musics.add(music);
+			case 2:
+				addBallad(musicInput, input);
 				break;
-			}
-			else if (num == 3) {
-				music = new Dance(MusicCategory.Dance);
-				music.getUserInput(input);
-				musics.add(music);
+			case 3:
+				addDance(musicInput, input);
 				break;
-			}
-			else if (num == 4) {
-				music = new Rock(MusicCategory.Rock);
-				music.getUserInput(input);
-				musics.add(music);
+			case 4:
+				addRock(musicInput, input);
 				break;
-			}
-			else {
+			default:
 				System.out.println("Select a number between 1 and 4");
+				continue;
 			}
 		}
 	}
 	
+	public void showAddMenu() {
+		System.out.println("*Add Music*");
+		System.out.println("1. POP");
+		System.out.println("2. Ballad");
+		System.out.println("3. Dance");
+		System.out.println("4. Rock");
+		System.out.print("Select Category: ");
+	}
+	
+	public void addPOP(MusicInput musicInput, Scanner input) {
+		musicInput = new Pop(MusicCategory.POP);
+		musicInput.getUserInput(input);
+		musics.add(musicInput);
+	}
+	
+	public void addBallad(MusicInput musicInput, Scanner input) {
+		musicInput = new Ballad(MusicCategory.Ballad);
+		musicInput.getUserInput(input);
+		musics.add(musicInput);
+	}
+	
+	public void addDance(MusicInput musicInput, Scanner input) {
+		musicInput = new Dance(MusicCategory.Dance);
+		musicInput.getUserInput(input);
+		musics.add(musicInput);
+	}
+	
+	public void addRock(MusicInput musicInput, Scanner input) {
+		musicInput = new Rock(MusicCategory.Rock);
+		musicInput.getUserInput(input);
+		musics.add(musicInput);
+	}
+	
 	public void deletemusic() {
-		String buf = input.nextLine();	//어떤 음악 삭제할 것인가
-		System.out.print("Enter a title of the music to delete: ");
-		String musictitle = input.nextLine();
+		String musictitle = title(input, "delete");
+		int index = findIndex(musictitle);
 		
-		int index = -1; //-1 은 index가 NULL이라는 뜻
+		deleting(index);
+	}
+	
+	public int findIndex(String musictitle) {
+		int index = -1;
 		for (int i = 0; i < musics.size(); i++) {	//그런 음악이 있는가 확인하기
 			if (musics.get(i).getTitle().equals(musictitle)) {
 				index = i;
@@ -70,155 +93,187 @@ public class MusicManager {
 			}
 		}
 		
+		return index;
+	}
+	
+	public int deleting(int index) {
 		if (index >= 0) {	//음악 삭제
-			Music music = new Music(input);
-			
 			int x = 5;
-			x = music.comfirmDecision("delete", 3);
-			if (x == 1) {
+			x = comfirmDecision("delete", 3);
+			switch(x) {
+			case 1:
 				System.out.println("The music has been deleted!\n");
 				musics.remove(index);
-			}
-			else if (x == 2) {
+				return 1;
+			case 2:
 				System.out.println("Execution canceled..");
 				System.out.println("Exit delete menu..\n");
-				return;
+				return 1;
+			default:
+				System.out.println("Error: Invalid Input\n");
+				return -1;
 			}
 		}
 		else {	//그런 음악 없음
 			System.out.println("There's no music with the title.");
 			System.out.println("Exit delete menu..\n");
-			return;
+			return -1;
 		}
 	}
 	
 	public void editmusic() {
-		String buf = input.nextLine();
-		System.out.print("Enter a title of the music to edit: ");
-		String musictitle = input.nextLine();
+		String musictitle = title(input, "edit");
 		for (int i = 0; i < musics.size(); i++) {
-			Music music = musics.get(i);
+			MusicInput musicInput = musics.get(i);
 			
-			if (music.getTitle().equals(musictitle)) {
+			if (musicInput.getTitle().equals(musictitle)) {
 				int select = 0;
-				
 				while (select != 5) { //가사 입력 배너, 재생목록
-					System.out.println("** Edit Tool **");
-					System.out.println("  1. Edit Title");
-					System.out.println("  2. Edit Singer");
-					System.out.println("  3. Edit Composer");
-					System.out.println("  4. Edit Date");
-					System.out.println("  5. Exit");
-					System.out.print("-Select a menu: ");
-					
+					showEditMenu();
 					select = input.nextInt();
-					if (select == 1) {
-						buf = input.nextLine();
-						System.out.print("Enter the title of the music: ");
-						String title = input.nextLine();
-						music.setTitle(title);
-					}
-					else if (select == 2) {
-						buf = input.nextLine();
-						System.out.print("Name of the singer: ");
-						String singer = input.nextLine();
-						music.setSinger(singer);
-					}
-					else if (select == 3) {
-						buf = input.nextLine();
-						System.out.print("Composer: ");
-						String composer = input.nextLine();
-						music.setComposer(composer);
-					}
-					else if (select == 4) {
-						System.out.print("The day released: ");
-						int date1 = input.nextInt();
-						music.setDate1(date1);
-						System.out.print("Month: ");
-						int date2 = input.nextInt();
-						music.setDate2(date2);
-						System.out.print("Year: ");
-						int date3 = input.nextInt();
-						music.setDate3(date3);
+					switch (select) {
+					case 1:
+						musicInput.setTitle(input);
+						break;
+					case 2:
+						musicInput.setSinger(input);
+						break;
+					case 3:
+						musicInput.setComposer(input);
+						break;
+					case 4:
+						musicInput.setDates(input);
+						break;
+					default:
+						System.out.println("Error: Invalid Input\n");
+						continue;
 					}
 					System.out.println();
-					
 				}
+				
 				break;
 			}
 		}
 	}
 	
+	public void showEditMenu() {
+		System.out.println("** Edit Tool **");
+		System.out.println("  1. Edit Title");
+		System.out.println("  2. Edit Singer");
+		System.out.println("  3. Edit Composer");
+		System.out.println("  4. Edit Date");
+		System.out.println("  5. Exit");
+		System.out.print("-Select a menu: ");
+	}
+	
 	public void viewmusiclist() {
 		int number = 0;
 		while (number != 1 && number != 2 && number != 3 && number != 4 && number != 5) {
-			System.out.println("1: View All Musics");
-			System.out.println("2: View POP Musics");
-			System.out.println("3: View Ballad Musics");
-			System.out.println("4: View Dance Musics");
-			System.out.println("5: View Rock Musics");
-			System.out.print("-Select a number: ");
+			showViewMenu();
 			number = input.nextInt(); 
-			if (number == 1) {
-				if (musics.get(0).equals(null)) {
-					System.out.println("\nThere's no music in the list!");
-				}
-				else {
-					System.out.println();
-					for (int i = 0; i < musics.size(); i++) {
-						musics.get(i).printInfo();
-					}
-					System.out.println();
-				}
-			}
-			else if (number == 2) {
-				System.out.println();
-				for (int i = 0; i < musics.size(); i++) {
-					if (musics.get(i).getCategory() == MusicCategory.POP) {
-						musics.get(i).printInfo();
-					}
-					else { //POP music이 없음 출력 -> 하나도 없음을 검사하는 방법
-					}
-				}
-				System.out.println();
-			}
-			else if (number == 3) {
-				System.out.println();
-				for (int i = 0; i < musics.size(); i++) {
-					if (musics.get(i).getCategory() == MusicCategory.Ballad) {
-						musics.get(i).printInfo();
-					}
-					else {
-					}
-				}
-				System.out.println();
-			}
-			else if (number == 4) {
-				System.out.println();
-				for (int i = 0; i < musics.size(); i++) {
-					if (musics.get(i).getCategory() == MusicCategory.Dance) {
-						musics.get(i).printInfo();
-					}
-					else {
-					}
-				}
-				System.out.println();
-			}
-			else if (number == 5) {
-				System.out.println();
-				for (int i = 0; i < musics.size(); i++) {
-					if (musics.get(i).getCategory() == MusicCategory.Rock) {
-						musics.get(i).printInfo();
-					}
-					else {
-					}
-				}
-				System.out.println();
-			}
-			else {
+			switch (number) {
+			case 1:
+				showAllMusic();
+				break;
+			case 2:
+				showPopMusic();
+				break;
+			case 3:
+				showBalladMusic();
+				break;
+			case 4:
+				showDanceMusic();
+				break;
+			case 5:
+				showRockMusic();
+				break;
+			default:
 				System.out.println("Select a number between 1 and 5");
+				continue;
 			}
 		}
 	}
 	
+	public void showViewMenu() {
+		System.out.println("1: View All Musics");
+		System.out.println("2: View POP Musics");
+		System.out.println("3: View Ballad Musics");
+		System.out.println("4: View Dance Musics");
+		System.out.println("5: View Rock Musics");
+		System.out.print("-Select a number: ");
+	}
+	
+	public void showAllMusic() {
+		if (musics.get(0).equals(null)) {
+			System.out.println("\nThere's no music in the list!");
+		}
+		else {
+			System.out.println();
+			for (int i = 0; i < musics.size(); i++) {
+				musics.get(i).printInfo();
+			}
+			System.out.println();
+		}
+	}
+	
+	public void showPopMusic() {
+		System.out.println();
+		for (int i = 0; i < musics.size(); i++) {
+			if (musics.get(i).getCategory() == MusicCategory.POP) {
+				musics.get(i).printInfo();
+			}
+			else { //POP music이 없음 출력 -> 하나도 없음을 검사하는 방법
+			}
+		}
+		System.out.println();
+	}
+	
+	public void showBalladMusic() {
+		System.out.println();
+		for (int i = 0; i < musics.size(); i++) {
+			if (musics.get(i).getCategory() == MusicCategory.Ballad) {
+				musics.get(i).printInfo();
+			}
+			else {
+			}
+		}
+		System.out.println();
+	}
+	
+	public void showDanceMusic() {
+		System.out.println();
+		for (int i = 0; i < musics.size(); i++) {
+			if (musics.get(i).getCategory() == MusicCategory.Dance) {
+				musics.get(i).printInfo();
+			}
+			else {
+			}
+		}
+		System.out.println();
+	}
+	
+	public void showRockMusic() {
+		System.out.println();
+		for (int i = 0; i < musics.size(); i++) {
+			if (musics.get(i).getCategory() == MusicCategory.Rock) {
+				musics.get(i).printInfo();
+			}
+			else {
+			}
+		}
+		System.out.println();
+	}
+	
+	public String title(Scanner input, String menu) {
+		String buf = input.nextLine();
+		System.out.print("Enter a title of the music to " + menu + ": ");
+		String musictitle = input.nextLine();
+		return musictitle;
+	}
+	
+	public int comfirmDecision(String menu, int i) {
+		System.out.println("Are you sure you want to " + menu + " this music? - 1: Yes, 2: No");
+		i = input.nextInt();
+		return i;
+	}
 }

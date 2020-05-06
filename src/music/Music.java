@@ -1,7 +1,7 @@
 package music;
 import java.util.Scanner;
 
-public class Music {
+public abstract class Music implements MusicInput{
 	Scanner input;
 	
 	public Music(Scanner input) {
@@ -111,60 +111,59 @@ public class Music {
 		this.date3 = date3;
 	}
 	
-	public void printInfo() { 
-		String genre = "music";
-		switch (this.category) {
-			case POP:
-				genre = "POP";
-				break;
-			case Ballad:
-				genre = "Ballad";
-				break;
-			case Dance:
-				genre = "Dance";
-				break;
-			case Rock:
-				genre = "Rock";
-				break;
-			default:
-		}
-		System.out.println("Genre: " + genre + ", Title: " + title + ", Singer: " + singer + ", Composer: " + composer
-				+ ", Relesed in " + date2 + "." + date1 + "." + date3);
-	}
+	public abstract void printInfo();
 	
-	public int comfirmDecision(String menu, int i) {
-		System.out.println("Are you sure you want to " + menu + " this music? - 1: Yes, 2: No");
-		i = input.nextInt();
-		return i;
-		}
-	
-	public void getUserInput(Scanner input) {
+	public void setTitle(Scanner input) {
 		String buf = input.nextLine();
 		System.out.print("Enter the title of the music: ");
 		String title = input.nextLine();
 		this.setTitle(title);
-		
+	}
+	
+	public void setSinger(Scanner input) {
+		String buf = input.nextLine();
 		System.out.print("Name of the singer: ");
 		String singer = input.nextLine();
 		this.setSinger(singer);
-		
+	}
+	
+	public void setComposer(Scanner input) {
+		String buf = input.nextLine();
 		System.out.print("Composer: ");
 		String composer = input.nextLine();
 		this.setComposer(composer);
-		
+	}
+	
+	public void setDates(Scanner input) {
 		System.out.print("The day released: ");
 		int date1 = input.nextInt();
 		this.setDate1(date1);
-		
 		System.out.print("Month: ");
 		int date2 = input.nextInt();
 		this.setDate2(date2);
-		
 		System.out.print("Year: ");
 		int date3 = input.nextInt();
 		this.setDate3(date3);
-		
-		System.out.println();
 	}
 	
+	public String setGenre() {
+		String genre = "music";
+		switch (this.category) {
+		case POP:
+			genre = "POP";
+			break;
+		case Ballad:
+			genre = "Ballad";
+			break;
+		case Dance:
+			genre = "Dance";
+			break;
+		case Rock:
+			genre = "Rock";
+			break;
+		default:
+		}
+		
+		return genre;
+	}
 }
