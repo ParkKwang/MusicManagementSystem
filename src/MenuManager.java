@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MenuManager { //idea note: 선호하는 노래 보여주는거 -> 즐겨찾기
@@ -5,32 +6,46 @@ public class MenuManager { //idea note: 선호하는 노래 보여주는거 -> �
 		Scanner input = new Scanner(System.in);
 		MusicManager mm = new MusicManager(input);
 		
+		selectMenu(input, mm);
+	}
+	
+	public static void selectMenu(Scanner input, MusicManager mm) {
 		int select = 0;
-		
+
 		while (select != 5) { //가사 입력 배너, 재생목록(장르별)
-			showMenu();
-			select = input.nextInt();
-			if (select == 1) {
-				System.out.println();
-				mm.addmusic();
+			try {
+				showMenu();
+				select = input.nextInt();
+				if (select == 1) {
+					System.out.println();
+					mm.addmusic();
+				}
+				else if (select == 2) {
+					System.out.println();
+					mm.deletemusic();
+				}
+				else if (select == 3) {
+					System.out.println();
+					mm.editmusic();
+				}
+				else if (select == 4) {
+					System.out.println();
+					mm.viewmusiclist();
+				}
+				else {
+					System.out.println("Select a number between 1 and 5");
+				}
 			}
-			else if (select == 2) {
+			catch (InputMismatchException e) {
+				System.out.println("Select a number between 1 and 5");
+				if (input.hasNext()) {
+					input.next();
+				}
+				select = -1;
 				System.out.println();
-				mm.deletemusic();
-			}
-			else if (select == 3) {
-				System.out.println();
-				mm.editmusic();
-			}
-			else if (select == 4) {
-				System.out.println();
-				mm.viewmusiclist();
-			}
-			else {
-				System.out.println("Select number between 1 and 5");
 			}
 		}
-		
+
 		System.out.println("Thank you for using!");
 	}
 	
