@@ -312,7 +312,7 @@ public class MusicManager {
 			i = input.nextInt();
 			}
 			catch (InputMismatchException e) {
-				System.out.println("Select a number between 1 and 4");
+				System.out.println("Select a number between 1 and 2");
 				if (input.hasNext()) {
 					input.next();
 				}
