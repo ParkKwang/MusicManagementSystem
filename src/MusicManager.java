@@ -160,7 +160,6 @@ public class MusicManager {
 							musicInput.setDates(input);
 							break;
 						default:
-							System.out.println("Error: Invalid Input\n");
 							continue;
 						}
 						System.out.println();
@@ -306,7 +305,7 @@ public class MusicManager {
 	}
 
 	public int comfirmDecision(String menu, int i) {
-		while (i != 1 || i != 2) {
+		while (i != 1 && i != 2) {
 			try {
 			System.out.println("Are you sure you want to " + menu + " this music? - 1: Yes, 2: No");
 			i = input.nextInt();

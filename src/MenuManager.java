@@ -32,6 +32,9 @@ public class MenuManager { //idea note: 선호하는 노래 보여주는거 -> �
 					System.out.println();
 					mm.viewmusiclist();
 				}
+				else if (select == 5) {
+					break;
+				}
 				else {
 					System.out.println("Select a number between 1 and 5");
 				}
