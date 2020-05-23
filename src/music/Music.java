@@ -1,12 +1,12 @@
 package music;
+import java.io.Serializable;
 import java.util.Scanner;
 
-public abstract class Music implements MusicInput{
-	Scanner input;
-	
-	public Music(Scanner input) {
-		this.input = input;
-	}
+public abstract class Music implements MusicInput, Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4209669250980188532L;
 	
 	protected MusicCategory category;
 	protected String title;
@@ -15,7 +15,7 @@ public abstract class Music implements MusicInput{
 	protected int date1;
 	protected int date2;
 	protected int date3;
-
+	
 	public Music() {
 	}
 	
@@ -45,14 +45,6 @@ public abstract class Music implements MusicInput{
 		this.date1 = date1;
 		this.date2 = date2;
 		this.date3 = date3;
-	}
-	
-	public Scanner getInput() {
-		return input;
-	}
-
-	public void setInput(Scanner input) {
-		this.input = input;
 	}
 
 	public MusicCategory getCategory() {

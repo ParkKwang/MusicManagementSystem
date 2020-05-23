@@ -1,23 +1,32 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import music.Ballad;
 import music.Dance;
-import music.Music;
 import music.MusicCategory;
 import music.MusicInput;
 import music.Pop;
 import music.Rock;
 
-public class MusicManager {
+public class MusicManager implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3851452235131056725L;
+	
 	ArrayList<MusicInput> musics = new ArrayList<MusicInput>(); //Music이라는 class를 다루는 배열 musics
-	Scanner input;
+	transient Scanner input;	//transient = don't want to save it(=scanner)
 
 	public MusicManager(Scanner input) {
 		this.input = input;
 	}
-
+	
+	public void setScanner(Scanner input) {
+		this.input = input;
+	}
+	
 	public void addmusic() {
 		MusicInput musicInput = null;
 
@@ -89,6 +98,7 @@ public class MusicManager {
 	}
 
 	public void deletemusic() {
+		System.out.println(input);	//추가한거
 		String musictitle = title(input, "delete");
 		int index = findIndex(musictitle);
 
@@ -190,11 +200,16 @@ public class MusicManager {
 	}
 
 	public void viewmusiclist() {
+		System.out.println("current");
+		if (input == null) {
+			System.out.println("bad");
+		}
 		int number = 0;
 		while (number != 1 && number != 2 && number != 3 && number != 4 && number != 5) {
 			try {
 				showViewMenu();
-				number = input.nextInt(); 
+				System.out.println(input);	//추가한거
+				number = input.nextInt();
 				switch (number) {
 				case 1:
 					showAllMusic();
@@ -226,7 +241,7 @@ public class MusicManager {
 			}
 		}
 	}
-
+	
 	public void showViewMenu() {
 		System.out.println("1: View All Musics");
 		System.out.println("2: View POP Musics");
