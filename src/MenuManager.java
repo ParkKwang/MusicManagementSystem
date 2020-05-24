@@ -17,11 +17,9 @@ public class MenuManager {//idea note: 선호하는 노래 보여주는거 -> �
 		MusicManager mm = getObject("musicmanager.ser");
 		if (mm == null) {
 			mm = new MusicManager(input);
-			System.out.println("bad" + input);
 		}
 		else if (mm != null) {
 			mm.setScanner(input);
-			System.out.println("good" + input);
 		}
 		
 		selectMenu(input, mm);

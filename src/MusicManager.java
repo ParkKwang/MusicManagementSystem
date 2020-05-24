@@ -98,7 +98,6 @@ public class MusicManager implements Serializable {
 	}
 
 	public void deletemusic() {
-		System.out.println(input);	//추가한거
 		String musictitle = title(input, "delete");
 		int index = findIndex(musictitle);
 
@@ -208,7 +207,6 @@ public class MusicManager implements Serializable {
 		while (number != 1 && number != 2 && number != 3 && number != 4 && number != 5) {
 			try {
 				showViewMenu();
-				System.out.println(input);	//추가한거
 				number = input.nextInt();
 				switch (number) {
 				case 1:
