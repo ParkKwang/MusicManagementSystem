@@ -1,14 +1,17 @@
 package gui;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
-public class AddMusicGUI extends JFrame {
-	public AddMusicGUI() {
+public class AddMusicGUI extends JPanel {
+	MainFrame frame;
+	
+	public AddMusicGUI(MainFrame frame) {
+		this.frame = frame;
+		
 		JPanel panel = new JPanel();
 		panel.setLayout(new SpringLayout());
 		
@@ -55,10 +58,6 @@ public class AddMusicGUI extends JFrame {
 		
 		SpringUtilities.makeCompactGrid(panel, 7, 2, 6, 6, 6, 6);
 		
-		this.setTitle("Add Music");
-		this.setSize(300, 300);
-		this.setContentPane(panel);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setVisible(true);
+		this.add(panel);
 	}
 }
