@@ -1,3 +1,4 @@
+package manager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -5,6 +6,7 @@ import java.util.Scanner;
 
 import music.Ballad;
 import music.Dance;
+import music.Music;
 import music.MusicCategory;
 import music.MusicInput;
 import music.Pop;
@@ -333,5 +335,13 @@ public class MusicManager implements Serializable {
 			}
 		}
 		return i;
+	}
+	
+	public int size() {
+		return musics.size();
+	}
+	
+	public Music get(int index) {
+		return (Music) musics.get(index);
 	}
 }

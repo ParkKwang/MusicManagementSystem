@@ -1,3 +1,4 @@
+package manager;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -7,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import gui.MainFrame;
 import log.EventLogger;
 
 public class MenuManager {//idea note: 선호하는 노래 보여주는거 -> 즐겨찾기
@@ -22,6 +24,8 @@ public class MenuManager {//idea note: 선호하는 노래 보여주는거 -> �
 			mm.setScanner(input);
 		}
 		
+		
+		MainFrame frame = new MainFrame(mm);
 		selectMenu(input, mm);
 		putObject(mm, "musicmanager.ser");
 	}

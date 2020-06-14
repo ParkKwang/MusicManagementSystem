@@ -3,15 +3,19 @@ package gui;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import manager.MusicManager;
+
 public class MainFrame extends JFrame {
+	MusicManager musicManager;
 	MenuSelection menuSelection;
 	AddMusicGUI addMusicGUI;
 	ViewMusicListGUI viewMusicListGUI;
 	
-	public MainFrame() {
+	public MainFrame(MusicManager musicManager) {
+		this.musicManager = musicManager;
 		this.menuSelection = new MenuSelection(this);
 		this.addMusicGUI = new AddMusicGUI(this);
-		this.viewMusicListGUI = new ViewMusicListGUI(this);
+		this.viewMusicListGUI = new ViewMusicListGUI(this, this.musicManager);
 		
 		this.setTitle("Menu Selection");
 		this.setSize(500, 300);
